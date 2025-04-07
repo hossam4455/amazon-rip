@@ -9,6 +9,8 @@ from .seriailzers import ProductSerializer, CollectionSerializer,ReviewSerialize
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter ,OrderingFilter
 from rest_framework.pagination import PageNumberPagination
+
+
 class ProductViewSet(ModelViewSet):
     queryset=Product.objects.all()
     serializer_class=ProductSerializer
@@ -46,7 +48,7 @@ class ReviewViewSet(ModelViewSet):
     
     serializer_class=ReviewSerializer
     def get_serializer_context(self):
-        return {'product_id',self.kwargs['product_pk']}
+        return {'product_id':self.kwargs['product_pk']}
     def get_queryset(self):
         return Review.objects.filter(product_id=self.kwargs['product_pk'])
     
