@@ -3,9 +3,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Count
-from rest_framework.viewsets import ModelViewSet
-from .models import Product, Collection ,OrderItem ,Review
-from .seriailzers import ProductSerializer, CollectionSerializer,ReviewSerializer
+from rest_framework.mixins import CreateModelMixin
+from rest_framework.viewsets import ModelViewSet ,GenericViewSet
+from .models import Product, Collection ,OrderItem ,Review,Cart,CartItem
+from .seriailzers import ProductSerializer, CollectionSerializer,ReviewSerializer,CartSerializer,CartItemSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter ,OrderingFilter
 from rest_framework.pagination import PageNumberPagination
@@ -54,3 +55,10 @@ class ReviewViewSet(ModelViewSet):
     
 
 
+class CartViewSet(CreateModelMixin,GenericViewSet):
+    queryset=CartItem.objects.all()
+    serializer_class=CartItemSerializer
+
+class CartItemViewSet(ModelViewSet):
+    queryset=Cart.objects.all()
+    serializer_class=CartSerializer
